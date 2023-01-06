@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} <title>{{ post.title_tag }} </title>{% endblock %}
+
+{% block content %}
+
+    <h1 style="margin-top: 80px">{{ post.title }}</h1>
+<hr>
+    <div class="container m-0 m-md-auto p-0 p-md-auto">
+        <div class="row">
+            <div class="col p-0 p-md-auto ">
+                <div class="card mb-3 blog_card" style="border: none">
+                    {% if  post.header_image %}
+                    <img src="{{  post.header_image.url }}" class="image-fluid mx-md-5 mx-3" alt="post image">
+                    {% endif %}
+                    <div class="card-body blog_card__body">
+                        <h4 class="card-title pb-2 blog_card__title">
+                           {{ post.title|safe }}
+                        </h4>
+                        <div class="card-text blog_card__text">{{ post.body|safe }}</div>
+
+                        <div class="like_part card-text" id="likepart">
+                                {% if post.auther.profile %}
+                                    <a href="{% url 'user-profile' post.auther.profile.id %}"> By {{ post.auther }} </a>
+                                {% else %}
+                                    <span> <i class="bi bi-person"></i> By {{ post.auther }} </span>
+                                {% endif %}
+                                <span class="post_time text-mute px-sm-3"><i class="bi bi-calendar"></i>{{ post.post_date }}</span>
+                                <span class="post_like "><i class="bi bi-heart-fill"></i>{{ total_likes }}</span>
+
+                                <form class="d-inline" action="{% url 'like_post' post.pk %}#likepart" method="post">
+                                    {% csrf_token %}
+                                    {% if user.is_authenticated %}
+                                        {% if liked %}
+                                            <button type="submit" name="post_id" value="{{ post.id }}" id="like-btn" class="like-btn">
+                                               <small>unlike</small>
+                                            </button>
+                                        {% else %}
+                                            <button type="submit" name="post_id" value="{{ post.id }}" id='like-btn' class="like-btn">
+                                                <small>like</small>
+                                            </button>
+                                        {% endif %}
+                                    {% else %}
+                                            <small><a href="{% url 'login' %}">Login</a> to like</small>
+                                    {% endif %}
+                                </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="post_edit_delete m-3">
+                {% if user.is_authenticated %}
+                    {% if user.id == post.auther.id %}
+                    <button class="btn btn-outline-danger px-3 mx-1">
+                        <i class="bi bi-pencil"></i> <a class="text-body text-decoration-none" href="{% url 'update_post' post.pk %}"> Edit </a>
+                    </button>
+                    <button class='btn btn-outline-danger px-3 mx-1'>
+                        <i class="bi bi-trash"></i> <a class="text-body text-decoration-none" href="{% url 'delete_post' post.pk %}"> Delete </a>
+                    </button>
+                    <hr>
+                    {% endif %}
+                {% endif %}
+                
+                </div>
+                
+
+                <!-- add comments section -->
+
+                <div class="py-3 comment_section" >
+                    <p class="text-warning fs-3">Add comment</p>
+                    <form method="post" action="{% url 'add-comment' post.id %}">
+                        <div class="form-group">
+                            {% csrf_token %}
+                            <input type="text" class="mb-3 form-control" name="name" required placeholder="your name">
+                            <textarea name="body" class=" mb-3 form-control" required placeholder="your comment"></textarea>
+                            <button type="submit"  class="btn btn-secondary">Add comment</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /add comments section -->
+
+                <!-- comments section -->
+                <div class="mt-3 comment_list">
+
+                    {% if not post.comment.all %}
+                        No Comments Yet... 
+                        <!-- <a href="{% url 'add-comment' post.pk %}">Add One</a> -->
+                    {% else %}
+                    <p class="text-warning">All comments</p>
+                        <!--
+                        <a href="{% url 'add-comment' post.pk %}">add comment</a><br>
+                        -->
+                        {% for comment in post.comment.all %}
+                            <strong>
+                                {{ comment.name }} - {{ comment.date_added }}
+                            </strong>
+                            <p>{{ comment.body }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <!-- /comments section -->
+
+            </div>
+        </div>
+    </div>
+<br><br>
+
+{% endblock %}

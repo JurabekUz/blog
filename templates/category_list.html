@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+  <title>
+    Categories 
+  </title> 
+{% endblock %}
+
+{% block content %}
+
+    <style>
+      .cat_item a {
+        text-decoration: none;
+        font-size: 1.2rem;
+    }
+    </style>
+
+      <h4 class="mt-3">Categories</h4>
+    <ul>
+      {% for cat in cat_menu_list %}
+        <li class="cat_item">
+          <a href="{% url 'category' cat|slugify %}">{{ cat }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+      
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} <title>Create New Category</title> {% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <h1 class="mt-3">Add Category</h1><br>
+        <form method="post">
+            <div class="form-group w-50">
+                {% csrf_token %}
+                 <label class="form-label" for="id_name">Name</label>
+                <input class="form-control" type="text" name="name" maxlength="100" required id="id_name">
+                <button type="submit" class="btn btn-secondary mt-3 px-3">submit</button>
+            </div> 
+        </form>
+     
+    {% else %}
+        You'are not allowed here!(and you know it ...)
+    {% endif %}
+
+{% endblock %}
+
+
+   
+    

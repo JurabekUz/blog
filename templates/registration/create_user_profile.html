@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %} <title>Create Profile Page</title>{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+
+        {% if user.profile %}
+
+            Siz Profil yaratgansiz. Xohlasangiz Uni taxrirlashingiz mumkin - 
+            <a href="{% url 'edit-user-profile' page_user.id %}">edit profile page</a>
+
+        {% else %}
+
+            <h1>Create Profile Page</h1>
+            <form action="" method="post" enctype='multipart/form-data'>
+                <div class="form-group">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-secondary">Submit</button>
+                </div>
+    
+            </form>
+
+        {% endif %}
+
+    {% else %}
+        You'are not allowed here!(and you know it ...)
+    {% endif %}
+
+
+{% endblock %}

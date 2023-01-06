@@ -1,0 +1,112 @@
+
+.post_like, .post_time {
+    
+    display: inline-block;
+    font-size: 18px;
+    padding: 10px 30px;
+}
+.post_like i {
+    color: red;
+}
+
+.like_part i  {
+    padding-right: 10px;
+    font-size: 18px;
+}
+.like_part a{
+    text-decoration: none;
+}
+.like-btn {
+    width: 60px ;
+    background-color: #ef36a7;
+    padding: 1px 10px;
+    border: black;
+    border-radius: 3px;
+}
+.like-btn:hover {
+    background-color: #d20909;
+    transition: 1s ease;
+}
+
+.search_section {
+    margin: 30px 50px;
+
+}
+
+.post_body a {
+    text-decoration: none;
+    color: aqua;
+    padding: 6px;
+    font-size: 1.2rem;
+}
+
+.post_snippet {
+    font-size: 0.9rem;
+    color: #797797;
+
+}
+nav div.navbar_target {
+    justify-content: space-between;
+}
+
+.edit__target a {
+    display: inline-block;
+    width: 100%;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+.social_accounts a {
+    text-decoration: none;
+    color: rgb(0, 38, 255);
+}
+
+@media screen and (max-width: 600px){
+
+    .post_like, .post_time {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+    
+    .like_part i  {
+        padding-right: 6px;
+        font-size: 14px;
+    }
+    .like_part a {
+        font-size: 12px;
+    }
+    #like-btn {
+        width: auto;
+        background-color: #ef36a7;
+        padding: 0 8px;
+        border: none;
+        border-radius: 3px;
+    }
+
+    .comment_section, .comment_list {
+        width: 90%;
+        margin: auto;
+    }
+    
+
+    .blog_card__text {
+        font-size: 12px !important;
+    }
+    
+    .navbar_target {
+        display: block;
+    }
+
+    .search_section {
+        font-size: 12px;
+        margin: 10px 20px;
+    }
+     
+
+
+    div.django-ckeditor-widget > div.cke_1 {
+       width: 98% !important;
+       margin: auto;
+    }
+
+}

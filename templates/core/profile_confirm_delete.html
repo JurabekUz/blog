@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %} <title>Delete Profile</title>  {% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    {% if user.id == profile.user.id %}
+    <h1>Delete Profile</h1><br>
+    <p class="my-2">Do you really delete the Profile</p>
+    <form method="post">
+        <div class="form-group">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+    </form>
+
+    {% else %}    
+
+            You are not allowed here! ( and you know it ...)
+       
+           {% endif %}         
+
+    {% else %}    
+
+     You are not allowed here! ( and you know it ...)
+
+    {% endif %}
+
+
+{% endblock %}

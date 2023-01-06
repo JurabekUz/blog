@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} <title>Profile</title>  {% endblock %}
+
+{% block content %}
+
+    <!--  Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <form action="/members/{{ page_user.id }}/delete_profile/" method="post">
+                {% csrf_token %}
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body">
+                    <p>Do you really delete the Profile</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card m-3">
+        <div class="row g-0">
+            <div class="col-md-2">
+            {% if page_user.profile_pic %}    
+                <img src="{{ page_user.profile_pic.url }}" class="img-fluid rounded-start" alt="user-pic">
+            {% else %}
+            <img src='{% static "core/images/default-user-pic.png" %} ' class="img-fluid rounded-start" alt="user-pic">
+            {% endif %}
+            </div>
+            <div class="col-md-10">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ page_user.user.first_name }} {{ page_user.user.last_name }}
+                </h5>
+                <p class="small text-muted social_accounts">
+                    <a href="{% url 'user-profile' page_user.id %}">Profile Page</a>
+                    {% if page_user.website_url %}
+                        <span>|</span><a href="{{ page_user.website_url }}"> Website </a>
+                    {% endif %}
+                    {% if page_user.fb_url %}
+                        <span>|</span><a href="{{ page_user.fb_url }}"> Facebook </a>
+                    {% endif %}
+                    {% if page_user.twitter_url %}
+                        <span>|</span><a href="{{ page_user.twitter_url }}"> Twitter </a>
+                    {% endif %}
+                    {% if page_user.insta_url %}
+                        <span>|</span><a href="{{ page_user.insta_url }}"> Instagram </a>
+                    {% endif %}
+                    {% if page_user.telegram_url %}
+                        <span>|</span><a href="{{ page_user.telegram_url }}"> Telegram </a>
+                    {% endif %}
+                </p>
+                <p class="card-text">
+                    {{ page_user.bio }}
+                </p>
+                
+            </div>
+            </div>
+        </div>
+    </div>
+<br><hr>
+
+{% if user.is_authenticated %}
+    {% if user.id == page_user.user.id %}
+    <div class="my-5 gap-3 row mx-auto edit__target">
+        <button class="btn btn-danger col-5 mx-auto"><a href="{% url 'change_password' %}">Change Password</a></button>
+        <button class="btn btn-danger col-5 mx-auto"><a href="{% url 'edit-profile' %}">Edit User Data</a></button>
+        <button
+         class="btn btn-secondary col-5 mx-auto"><a href="{% url 'edit-user-profile' page_user.id %}">Edit profile page</a></button>
+        <button type="button", class="btn btn-secondary col-5 mx-auto"><a href="{% url 'delete_user_page'  page_user.id %}" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Delete Profile
+        </a></button>
+    </div>
+    {% endif %}
+    
+{% endif %}    
+   
+
+{% endblock %}
